@@ -11,7 +11,7 @@
         <form action="/" method="post">
     
             <input type="datetime-local" name="date_input" id="date_input">
-            <button type="submit">submit</button>
+            <button class="" type="submit">submit</button>
 
     
         </form>
@@ -19,10 +19,10 @@
     </div>
 
     
-    <div class="timer-container">
+    <div class="flex items-center">
 
 
-        <div id="timer" class="timer">
+        <div id="timer" class="text-blue-500">
             <script type="text/javascript" src={{ url_for('static', filename='script.js')}}></script>
             <script>
                 var timeArray = conv({{ countdowns }})

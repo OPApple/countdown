@@ -1,0 +1,22 @@
+{
+  "name": "countdown",
+  "scripts": {
+    "watch-css": "npx tailwindcss -i ./static/css/src/input.css -o ./static/css/dist/output.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OPApple/countdown.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OPApple/countdown/issues"
+  },
+  "homepage": "https://github.com/OPApple/countdown#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.10",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
+  }
+}
