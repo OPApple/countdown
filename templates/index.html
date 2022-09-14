@@ -19,7 +19,7 @@
             <script type="text/javascript" src={{ url_for('static', filename='script.js')}}></script>
             <script>
                 
-                var timeArray = conv({{ countdowns }})
+                var timeArray = conv({{ countdowns.content }})
                 
                 
 
@@ -58,7 +58,7 @@
     </div>
 
     <div class="flex justify-center py-6">
-        until: something happens .^.<!--Add the description of the timer here-->
+        until: {{countdowns.desc}}
     
     </div>
 

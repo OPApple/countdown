@@ -31,7 +31,9 @@ def toJsDate(date):
 
 class Countdowns(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
     content = db.Column(db.String(200), nullable=False)
+    desc = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -40,12 +42,17 @@ class Countdowns(db.Model):
     # this allows getting an element (overrided method)
     def __getitem__(self, id): 
         return self.id
+    
+    def __str__ (self):
+        return str(self.id)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        countdown = request.form['date_input']
-        new_countdown = Countdowns(content=countdown)
+        date = request.form['date_input']
+        desc = request.form['desc']
+        name = request.form['name']
+        new_countdown = Countdowns(content=date, desc=desc, name=name)
         
         
 
@@ -58,7 +65,8 @@ def index():
         
     else:
         countdowns = Countdowns.query.order_by(Countdowns.date_created.desc()).first()
-        countdowns = toJsDate(countdowns)
+        app.logger.info(countdowns)
+        countdowns.content = toJsDate(countdowns.content)
         
         return render_template('index.html', countdowns=countdowns)
         
