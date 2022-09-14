@@ -60,11 +60,11 @@ def index():
         countdowns = Countdowns.query.order_by(Countdowns.date_created.desc()).first()
         countdowns = toJsDate(countdowns)
         
-        app.logger.info(type(countdowns))
-        
         return render_template('index.html', countdowns=countdowns)
         
-
+@app.route('/createnew')
+def create_new():
+    return render_template('createnew.html')
     
 
 if __name__ == "__main__":
