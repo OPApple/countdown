@@ -19,9 +19,41 @@
     </div>
 
     
-    <div class="results">
-        
-        {{ countdowns }}
+    <div class="timer-container">
+
+
+        <div id="timer" class="timer">
+            <script type="text/javascript" src={{ url_for('static', filename='script.js')}}></script>
+            <script>
+                var timeArray = conv({{ countdowns }})
+                var objectiveDate = new Date(timeArray[0], timeArray[1], timeArray[2], timeArray[3], timeArray[4])
+                
+                var timer = setInterval(function(){
+                    var currentDate = new Date().getTime()
+                    var difference = objectiveDate - currentDate
+                    console.log(currentDate)
+
+                    var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                    var timeleft = days + ":" + hours + ":" + minutes + ":" + seconds
+
+                    document.getElementById('timer').innerHTML = timeleft
+
+                    if(difference < 0){
+                        clearInterval(timer)
+                        douc.getElementById('timer').innerHTML = "WOOOOO"
+                    }
+                    
+                }, 1000)
+                
+            </script>
+
+            <div class="info"></div>
+
+        </div>
 
     </div>
     

@@ -8,29 +8,39 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///times.db'
 db = SQLAlchemy(app)
 
 
-def toPythonDate(date):
+def toJsDate(date):
     new_date = str(date).split("-")
     new_date_hms = new_date[2].split("T")
 
     year = int(new_date[0])
-    month = int(new_date[1])
+    month = int(new_date[1]) - 1
     day = int(new_date_hms[0])
     hour = int(new_date_hms[1].split(":")[0])
     minute = int(new_date_hms[1].split(":")[1])
 
-    final_date = datetime(year=year, month=month, day=day, hour=hour, minute=minute)
+    final_date = [year, month, day, hour, minute]
     
 
     return final_date
 
-def calculateDifference(date):
-    current_date = datetime.now()
+# def calculateDifference(date):
+#     current_date = datetime.now()
 
-    time_difference =  date - current_date    
+#     time_difference =  date - current_date    
 
-    return time_difference
+#     return time_difference
     
+# def toJSDate(deltatime):
+#     new_deltatime = str(deltatime).split(' ')
+    
+#     days = int(new_deltatime[0])
+#     hours = int(new_deltatime[2].split(':')[0])
+#     minutes = int(new_deltatime[2].split(':')[1])
+#     seconds = int(new_deltatime[2].split(':')[2].split('.')[0])
+    
+#     converted_deltatime = [days, hours, minutes, seconds]
 
+#     return converted_deltatime
 
 
 class Countdowns(db.Model):
@@ -61,8 +71,10 @@ def index():
         
     else:
         countdowns = Countdowns.query.order_by(Countdowns.date_created.desc()).first()
-        countdowns = toPythonDate(countdowns)
-        app.logger.info(calculateDifference(countdowns))
+        countdowns = toJsDate(countdowns)
+        
+        # difference = calculateDifference(countdowns)
+        # difference = toJSDate(difference)
 
         
         return render_template('index.html', countdowns=countdowns)
