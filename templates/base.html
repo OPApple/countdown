@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dist/output.css') }}">
     {% block head %}{% endblock %}
 </head>
-<body>
-    <div id="navi">
+<body class="m-0 bg-neutral-300">
+    <div id="navi" class="flex flex-row shadow-gray-400 bg-slate-100 shadow-lg space-x-40 py-7 mb-10 justify-center">
+
+        <a href="/" class="group text-gray-800 transition duration-300">
+            Main
+            <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-500"></span>
+        </a>
+        <a href="#" class="group text-gray-800 transition duration-300">
+            Presets
+            <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-500"></span>
+        </a>
+        <a href="/createnew" class="group text-gray-800 transition duration-300">
+            Create your own
+            <span class="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-blue-500"></span>
+        </a>
 
     </div>
 
