@@ -9,38 +9,24 @@ db = SQLAlchemy(app)
 
 
 def toJsDate(date):
-    new_date = str(date).split("-")
-    new_date_hms = new_date[2].split("T")
 
-    year = int(new_date[0])
-    month = int(new_date[1]) - 1
-    day = int(new_date_hms[0])
-    hour = int(new_date_hms[1].split(":")[0])
-    minute = int(new_date_hms[1].split(":")[1])
+    try:
+        new_date = str(date).split("-")
+        new_date_hms = new_date[2].split("T")
 
-    final_date = [year, month, day, hour, minute]
-    
+        year = int(new_date[0])
+        month = int(new_date[1]) - 1
+        day = int(new_date_hms[0])
+        hour = int(new_date_hms[1].split(":")[0])
+        minute = int(new_date_hms[1].split(":")[1])
 
-    return final_date
+        final_date = [year, month, day, hour, minute]
+        
 
-# def calculateDifference(date):
-#     current_date = datetime.now()
+        return final_date
+    except:
+        return "something went wrong, don't be a fuckwit and submit empty froms"
 
-#     time_difference =  date - current_date    
-
-#     return time_difference
-    
-# def toJSDate(deltatime):
-#     new_deltatime = str(deltatime).split(' ')
-    
-#     days = int(new_deltatime[0])
-#     hours = int(new_deltatime[2].split(':')[0])
-#     minutes = int(new_deltatime[2].split(':')[1])
-#     seconds = int(new_deltatime[2].split(':')[2].split('.')[0])
-    
-#     converted_deltatime = [days, hours, minutes, seconds]
-
-#     return converted_deltatime
 
 
 class Countdowns(db.Model):
@@ -61,6 +47,7 @@ def index():
         countdown = request.form['date_input']
         new_countdown = Countdowns(content=countdown)
         
+        
 
         try:
             db.session.add(new_countdown)
@@ -73,9 +60,7 @@ def index():
         countdowns = Countdowns.query.order_by(Countdowns.date_created.desc()).first()
         countdowns = toJsDate(countdowns)
         
-        # difference = calculateDifference(countdowns)
-        # difference = toJSDate(difference)
-
+        app.logger.info(type(countdowns))
         
         return render_template('index.html', countdowns=countdowns)
         

@@ -7,7 +7,7 @@
 
 {% block body %}
     
-    <div class="form">
+    <div class="">
         <form action="/" method="post">
     
             <input type="datetime-local" name="date_input" id="date_input">
@@ -25,13 +25,18 @@
         <div id="timer" class="text-blue-500">
             <script type="text/javascript" src={{ url_for('static', filename='script.js')}}></script>
             <script>
+                
                 var timeArray = conv({{ countdowns }})
+                
+                
+
+
                 var objectiveDate = new Date(timeArray[0], timeArray[1], timeArray[2], timeArray[3], timeArray[4])
                 
                 var timer = setInterval(function(){
                     var currentDate = new Date().getTime()
                     var difference = objectiveDate - currentDate
-                    console.log(currentDate)
+                    
 
                     var days = Math.floor(difference / (1000 * 60 * 60 * 24));
                     var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

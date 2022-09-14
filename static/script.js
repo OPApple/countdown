@@ -1,3 +1,9 @@
 function conv(vars){
-    return vars
+    try{
+        return vars
+
+    }catch(err){
+        console.log("there was an error")
+
+    }
 }
