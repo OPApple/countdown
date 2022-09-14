@@ -6,11 +6,16 @@
 
 
 {% block body %}
-    
-    <div class="flex justify-center items-center h-screen">
 
+<div class="flex flex-col justify-center items-center h-screen">
+    
+    <div class="text-blue-500 text-3xl font-sans p-2">
+        Only:
+    </div>
 
         <div id="timer" class="text-blue-500 text-8xl">
+            
+
             <script type="text/javascript" src={{ url_for('static', filename='script.js')}}></script>
             <script>
                 
@@ -30,6 +35,11 @@
                     var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                    
+                    hours = (hours < 10) ? "0" + hours : hours
+                    minutes = (minutes < 10) ? "0" + minutes : minutes
+                    seconds = (seconds < 10) ? "0" + seconds : seconds
+
 
                     var timeleft = days + ":" + hours + ":" + minutes + ":" + seconds
 
@@ -44,15 +54,16 @@
                 
             </script>
 
-            <div class="info">
-
-
-            </div>
-
-        </div>
-
-        
 
     </div>
+
+    <div class="flex justify-center py-6">
+        until: something happens .^.<!--Add the description of the timer here-->
+    
+    </div>
+
+
+</div>
+
     
 {% endblock %}

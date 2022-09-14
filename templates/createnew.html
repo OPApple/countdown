@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block body %}
-<div class="">
+<div class="flex flex-col justify-center items-center">
     <form action="/" method="post">
-
+        
+        <input type="text" placeholder="description" name="desc" id="desc" class="outline outline-offset-2 outline-1">
         <input type="datetime-local" name="date_input" id="date_input">
-        <button class="" type="submit">submit</button>
+        <button type="submit" class="outline outline-1 bg-gray-400 hover:bg-gray-500">submit</button>
 
 
     </form>
