@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block body %}
-<div class="flex flex-col justify-center items-center">
+<div class="flex flex-wrap justify-center items-center">
     <form action="/" method="post">
         
-        <input type="text" placeholder="name" name="name" id="name">
-        <input type="text" placeholder="description" name="desc" id="desc" class="outline outline-offset-2 outline-1">
-        <input type="datetime-local" name="date_input" id="date_input">
-        <button type="submit" class="outline outline-1 bg-gray-400 hover:bg-gray-500">submit</button>
+        <input type="text" placeholder="name" name="name" id="name"class="rounded-md">
+        <input type="text" placeholder="until ..." name="desc" id="desc"class="rounded-md">
+        <input type="datetime-local" name="date_input" id="date_input" class="rounded-md">
+        <button type="submit" class="rounded-md text-gray-900 outline outline-1 bg-gray-400 hover:bg-gray-500">submit</button>
 
 
     </form>
