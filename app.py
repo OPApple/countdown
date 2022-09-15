@@ -1,3 +1,4 @@
+from re import search
 from xml.etree.ElementTree import tostring
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +7,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///times.db'
 db = SQLAlchemy(app)
+
 
 
 def toJsDate(date):
@@ -49,31 +51,69 @@ class Countdowns(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        date = request.form['date_input']
-        desc = request.form['desc']
-        name = request.form['name']
-        new_countdown = Countdowns(content=date, desc=desc, name=name)
+        
+        try:
+                
+            date = request.form['date_input']
+            desc = request.form['desc']
+            name = request.form['name']
+            new_countdown = Countdowns(content=date, desc=desc, name=name)
+            try:
+                db.session.add(new_countdown)
+                db.session.commit()
+                return redirect('/')
+            except:
+                return "Oops, fuck yuo"
+        
+        except:
+            return redirect('/timer')
         
         
 
-        try:
-            db.session.add(new_countdown)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return "Oops, fuck yuo"
+
         
     else:
-        countdowns = Countdowns.query.order_by(Countdowns.date_created.desc()).first()
-        app.logger.info(countdowns)
-        countdowns.content = toJsDate(countdowns.content)
-        
-        return render_template('index.html', countdowns=countdowns)
+        # countdowns = Countdowns.query.order_by(Countdowns.date_created.desc()).first()
+        # countdowns.content = toJsDate(countdowns.content)
+        return render_template('index.html')
         
 @app.route('/createnew')
 def create_new():
     return render_template('createnew.html')
+
+@app.route('/timer', methods=['POST', 'GET'])
+def timer():
     
+    if request.method == 'POST':
+        try:
+            search = request.form['search']
+            countdowns = Countdowns.query.filter_by(name=search).first()
+            countdowns.content = toJsDate(countdowns.content)
+            return render_template('timer.html', countdowns=countdowns)
+        except:
+            
+            return render_template('timer.html', countdowns="None")
+
+    else:
+        return render_template('timer.html', countdowns=False)
+
+@app.route('/christmas')
+def christmas():
+    countdowns = Countdowns.query.filter_by(name='x-mas').first()
+    countdowns.content = toJsDate(countdowns.content)
+    return render_template('christmas.html', countdowns=countdowns)
+
+@app.route('/summer')
+def summer():
+    countdowns = Countdowns.query.filter_by(name='summer').first()
+    countdowns.content = toJsDate(countdowns.content)
+    return render_template('christmas.html', countdowns=countdowns)
+
+@app.route('/P5R')
+def P5R():
+    countdowns = Countdowns.query.filter_by(name='P5R').first()
+    countdowns.content = toJsDate(countdowns.content)
+    return render_template('christmas.html', countdowns=countdowns)
 
 if __name__ == "__main__":
     app.run(debug=True)

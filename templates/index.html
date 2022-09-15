@@ -7,63 +7,22 @@
 
 {% block body %}
 
-<div class="flex flex-col justify-center items-center h-screen">
+<div class="flex justify-center">
+    <div class="text-left">
+        <h1 class="text-2xl">Countdowns to:  </h1>
+            <li><a class="hover:underline duration-200" href="/christmas">Christmas</a></li>
+            <li><a class="hover:underline duration-200" href="/summer">Summer Vacation</a></li>
+            <li><a class="hover:underline duration-200" href="/P5R">Persona 5 Roal remake release</a></li>
+
+    </div>
+
     
-    <div class="text-blue-500 text-3xl font-sans p-2">
-        Only:
-    </div>
-
-        <div id="timer" class="text-blue-500 text-8xl">
-            
-
-            <script type="text/javascript" src={{ url_for('static', filename='script.js')}}></script>
-            <script>
-                
-                var timeArray = conv({{ countdowns.content }})
-                
-                
-
-
-                var objectiveDate = new Date(timeArray[0], timeArray[1], timeArray[2], timeArray[3], timeArray[4])
-                
-                var timer = setInterval(function(){
-                    var currentDate = new Date().getTime()
-                    var difference = objectiveDate - currentDate
-                    
-
-                    var days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                    
-                    hours = (hours < 10) ? "0" + hours : hours
-                    minutes = (minutes < 10) ? "0" + minutes : minutes
-                    seconds = (seconds < 10) ? "0" + seconds : seconds
-
-
-                    var timeleft = days + ":" + hours + ":" + minutes + ":" + seconds
-
-                    document.getElementById('timer').innerHTML = timeleft
-
-                    if(difference < 0){
-                        clearInterval(timer)
-                        douc.getElementById('timer').innerHTML = "WOOOOO"
-                    }
-                    
-                }, 1000)
-                
-            </script>
-
-
-    </div>
-
-    <div class="flex justify-center py-6">
-        until: {{countdowns.desc}}
     
-    </div>
-
-
+    
 </div>
-
+<br><br>
+<div class="flex justify-center text-3xl">
+    <h1 class="hover:underline duration-200"><a href="/createnew">Or create your own countdown timer!</a></h1>
+</div>
     
 {% endblock %}

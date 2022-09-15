@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Countdowns</title>
+{% endblock %}
+
+
+{% block body %}
+
+<div class="flex justify-center">
+    <form action="/timer" method="post">
+        <input type="search" name="search" id="search" class="rounded-md">
+
+    </form>
+</div>
+
+<div class="flex flex-col justify-center items-center h-screen">
+    
+
+
+
+    <div class="text-blue-500 text-3xl font-sans p-2">
+        Only:
+    </div>
+
+        <div id="timer" class="text-blue-500 text-8xl">
+            
+
+            <script type="text/javascript" src={{ url_for('static', filename='script.js')}}></script>
+            <script>
+
+                
+                
+                var timeArray = conv({{ countdowns.content }})
+                
+                
+                console.log(typeof(timeArray))
+
+                if(timeArray != false){
+
+                    var objectiveDate = new Date(timeArray[0], timeArray[1], timeArray[2], timeArray[3], timeArray[4])
+                    
+                    var timer = setInterval(function(){
+    
+    
+                        var currentDate = new Date().getTime()
+                        var difference = objectiveDate - currentDate
+                        
+    
+                        var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                        
+                        
+                        hours = (hours < 10) ? "0" + hours : hours
+                        minutes = (minutes < 10) ? "0" + minutes : minutes
+                        seconds = (seconds < 10) ? "0" + seconds : seconds
+    
+    
+                        var timeleft = (days <= 0) ? hours + ":" + minutes + ":" + seconds : days + ":" + hours + ":" + minutes + ":" + seconds
+    
+                        document.getElementById('timer').innerHTML = timeleft
+    
+                        if(difference < 0){
+                            clearInterval(timer)
+                            document.getElementById('timer').innerHTML = "WOOOOO"
+                        }
+                        
+                    }, 1000)
+                }else{
+                    console.log("first")
+                    document.getElementById('timer').innerHTML = "No timer found"
+                }
+                
+            </script>
+
+
+    </div>
+
+    <div class="flex justify-center py-6">
+        until: {{countdowns.desc}}
+    
+    </div>
+
+
+
+</div>
+
+    
+{% endblock %}
